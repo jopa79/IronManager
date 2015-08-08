@@ -31,37 +31,3 @@ class ObjectIterator :
                 self.currentObject = self.objectStack.pop()
                 self.nextDepth = self.nextDepth - 1
         return obj
-
-
-def main():
-    objsel = "Constraint"
-    objcon = "Shape"
-    doc = docs.GetActiveDocument()
-    obj = doc.GetFirstObject()
-    scene = ObjectIterator(obj)
-    scene2 = ObjectIterator(obj)
-    c4d.CallCommand(13957)
-    
-    print "START WITH THIS MADNESS!"
-    c4d.CallCommand(100004766) #select all
-
-    for obj in scene:
-        print scene.depth, scene.depth*'', obj.GetName()
-        if obj.GetName().find(objcon) == int(-1):
-            doc.SetSelection(obj, c4d.SELECTION_SUB)
-    c4d.CallCommand(12236) # Make Editable    
-    c4d.CallCommand(100004766) #select all
-    print "DONE FIRST!"
-    
-    for obj in scene2:
-        print scene.depth, scene.depth*'', obj.GetName()
-        if obj.GetName().find(objsel) == int(-1):
-            doc.SetSelection(obj, c4d.SELECTION_SUB)
-    c4d.CallCommand(12109) # Delete
-    print "DONE SECOND!"
-    
-c4d.EventAdd
-
-
-if __name__=='__main__':
-    main()
